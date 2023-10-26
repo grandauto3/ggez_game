@@ -9,18 +9,26 @@ use ggez::{
         DrawParam,
     },
 };
-use crate::core::input_context::InputContext;
-
-use crate::game::player::Player;
+use crate::{
+    core::{
+        input_context::InputContext,
+        traits::auto_register::AutoRegister
+    },
+    game::player::Player
+};
+extern crate generational_arena;
+use generational_arena::Arena;
 
 pub struct Game {
     player: Player,
+    arena: Arena<Box<dyn AutoRegister>>
 }
 
 impl Game {
     pub fn new(ctx: &mut Context) -> Self {
         Game {
-            player: Player::new(ctx)
+            player: Player::new(ctx),
+            arena: Arena::new()
         }
     }
 

@@ -18,6 +18,7 @@ use ggez::{
 
 use crate::core::input_context::InputContext;
 
+
 pub struct Player {
     position: Point2<f32>,
     speed: f32,
