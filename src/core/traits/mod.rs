@@ -1,1 +1,1 @@
-pub mod auto_register;
+pub mod game_object;

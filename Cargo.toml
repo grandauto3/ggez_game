@@ -8,4 +8,3 @@ edition = "2021"
 [dependencies]
 ggez = "0.9.3"
 generational-arena = "0.2.9"
-ggez_traits = {path = "src/core/traits/ggez_traits"}

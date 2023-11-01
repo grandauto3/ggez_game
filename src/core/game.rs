@@ -1,45 +1,37 @@
+use crate::{
+    core::{input_context::InputContext, traits::game_object::GameObject},
+    game::player::Player,
+};
 use ggez::{
     event::EventHandler,
-    Context,
-    GameResult,
-    graphics::{
-        self,
-        Color,
-        Drawable,
-        DrawParam,
-    },
-};
-use crate::{
-    core::{
-        input_context::InputContext,
-        traits::auto_register::AutoRegister
-    },
-    game::player::Player
+    graphics::{self, Color, DrawParam, Drawable},
+    Context, GameResult,
 };
 extern crate generational_arena;
 use generational_arena::Arena;
 
 pub struct Game {
     player: Player,
-    arena: Arena<Box<dyn AutoRegister>>
+    arena: Arena<Box<dyn GameObject>>,
 }
 
 impl Game {
     pub fn new(ctx: &mut Context) -> Self {
         Game {
             player: Player::new(ctx),
-            arena: Arena::new()
+            arena: Arena::new(),
         }
     }
 
     pub fn start(&self) {}
 
+    pub fn spawn(&self, game_object: Box<dyn GameObject>) {
+        // self.arena.
+    }
+
     fn process_input(&mut self, ctx: &mut Context) {
-        self.player.process_input(&InputContext::new((
-            &ctx.keyboard,
-            &ctx.mouse,
-            &ctx.time,
-        )));
+        self.player
+            .process_input(&InputContext::new((&ctx.keyboard, &ctx.mouse, &ctx.time)));
     }
 }
 
