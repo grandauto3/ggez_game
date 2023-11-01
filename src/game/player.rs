@@ -16,7 +16,12 @@ use ggez::{
     input::keyboard::KeyCode,
 };
 
-use crate::core::input_context::InputContext;
+use crate::{
+    core::{
+        input_context::InputContext,
+        traits::game_object::GameObject,
+    }
+};
 
 
 pub struct Player {
@@ -27,30 +32,11 @@ pub struct Player {
     new_position: Point2<f32>,
 }
 
-impl Player {
-    pub fn new(ctx: &mut Context) -> Self {
-        Player {
-            position: vec2(0., 0.).into(),
-            speed: 100.0,
-            mesh: Mesh::new_circle(
-                ctx,
-                DrawMode::fill(),
-                vec2(10.0, 10.0),
-                10.0,
-                2.0,
-                Color::BLACK).expect("Creating mesh didn't work"),
-            new_position: Point2 {
-                x: 0.0,
-                y: 0.0,
-            },
-        }
-    }
-
-    pub fn update(&mut self) {
+impl GameObject for Player {
+    fn update(&mut self) {
         self.move_position(self.new_position);
     }
-
-    pub fn process_input(&mut self, input_ctx: &InputContext) {
+    fn process_input(&mut self, input_ctx: &InputContext) {
         let mut cur_pos = self.position;
         let input = input_ctx.keyboard;
         let delta_time = input_ctx.time.delta().as_secs_f32();
@@ -70,6 +56,27 @@ impl Player {
 
         self.new_position = cur_pos;
     }
+}
+
+impl Player {
+    pub fn new(ctx: &Context) -> Self {
+        Player {
+            position: vec2(0., 0.).into(),
+            speed: 100.0,
+            mesh: Mesh::new_circle(
+                ctx,
+                DrawMode::fill(),
+                vec2(10.0, 10.0),
+                10.0,
+                2.0,
+                Color::BLACK).expect("Creating mesh didn't work"),
+            new_position: Point2 {
+                x: 0.0,
+                y: 0.0,
+            },
+        }
+    }
+
 
     pub fn move_position(&mut self, new_pos: Point2<f32>) {
         self.position = new_pos;
