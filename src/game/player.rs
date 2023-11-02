@@ -30,9 +30,11 @@ pub struct Player {
     mesh: Mesh,
 
     new_position: Point2<f32>,
+
+    game_object: GameObject,
 }
 
-impl GameObject for Player {
+impl Player {
     fn update(&mut self) {
         self.move_position(self.new_position);
     }

@@ -13,7 +13,7 @@ impl App {
             .build()
             .expect("Could not create context");
 
-        let game = Game::new(&mut ctx);
+        let game = Game::new();
         game.start();
 
         event::run(ctx, event_loop, game);
